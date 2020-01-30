@@ -59,7 +59,7 @@ ellipse (dotX+(DIE_SIZE/2),dotY+(DIE_SIZE/2),DOT_SIZE,DOT_SIZE);                
    fill (255);
 int topLeftX= 3*(width/7),topLeftY=3*(height/5),dotX=topLeftX+(DIE_SIZE/4),dotY= topLeftY +(DIE_SIZE/4) ;           //topLeftX & topLeftY: starting X-coordinate and Y-coordinate of dice-five
 fill (255,193,8);
-rect(topLeftX, topLeftY, DIE_SIZE, DIE_SIZE) ;
+rect(topLeftX, topLeftY, DIE_SIZE, DIE_SIZE) ;                                                  
 fill (0);
 ellipse (dotX,dotY,DOT_SIZE,DOT_SIZE);                                                                                // drawing top-left dot of the dice
 ellipse (dotX + (DIE_SIZE/2),topLeftY+(DIE_SIZE/4),DOT_SIZE,DOT_SIZE);                                                  // drawing top-right dot of the dice
