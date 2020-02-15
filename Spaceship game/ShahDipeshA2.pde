@@ -1,30 +1,28 @@
 /**
  COMP1010SECTION[D01]
  *INSTRUCTOR:[Dr. Heather Matheson]
- *NAME:[Dipesh shah]
- *Student no: [7882947]
+ *NAME:[Dipesh Shah]
  *ASSIGNMENT:[Assignment2]
  *QUESTION:[Question4]
- *PURPOSE:[Completing the space game]
+ *PURPOSE:[Move the spaceship through different obstacles]
  */
-
-float theta=radians(0), phi=radians(130), length =100, breadth=10;
-float centerX, centerY, d1=30, d2=20;
-float headX, headY, leftX, leftY, rightX, rightY;
-final float SPEED = 2, TURN_SPEED=0.02, SPACING=80;
+final float SPEED = 2, TURN_SPEED=0.02, SPACING=60;                // spacing defines the distance between the two passages
+float theta=radians(0), phi=radians(130), length =100, breadth=10; // length and breadth define the height and width of rectangles
+float centerX, centerY, head_height=30, body_width=20;              //head_height and head_width is the distance from centre of spaceship to the tip, and the distance from centre to the wings of the spaceship respectively
+float headX, headY, leftX, leftY, rightX, rightY;                // head, left and right are the tip,left wing and right wing of the spaceship
 String status = "straight";                                      //this is a state variable that defines the movement of the spaceship
 boolean outOfBound = false;
 float red = random (100, 150), green = random(100, 150), blue = random(100, 150);
-boolean topBottom=true, bottom =true, gameOver =false;
-float R_Position = random (2*SPACING, width-SPACING), rectXOne, rectYOne, rectXTwo, rectYTwo, len, wid;
+boolean topBottom=true, bottom =false, gameOver =false;
+float R_Position = random (2*SPACING, width-SPACING), rectXOne, rectYOne, rectXTwo, rectYTwo, len, wid;  // R_Position stores random number,rectOne is the rectangle to the right of the passage, rectX and rectY control the X and Y axis of rectangle, len and width are the length and width of rectangle
 
-int randomBoolean;
+int randomBoolean;                                          // stores a random number betn -1 and 1
 
 void setup ()
 {
-  size (700, 600);
-  centerX = 250;
-  centerY=250;
+  size (700, 500);
+  centerX = width/2;
+  centerY=height/2;
 }
 
 void draw() {
@@ -38,14 +36,12 @@ void draw() {
   }
 }
 
-/*
+/* [This function checks if the spaceship collided with the rectangles]
  * [Here, PtInRect() is called and when it returns a true statement the game is over]
  *[Here the left wing, right wing and head are checked to see if they have collided with the passage]
- *[This concept follows for each 'if-statements' in drawPassage() method]
  *[It gets its information from the global variables and also from PtInRect()]
  */
-void checkCollision()
-{
+void checkCollision() {
   if ((ptInRect(headX, headY, rectXOne, rectYOne, wid, len))||(ptInRect(leftX, leftY, rectXOne, rectYOne, wid, len))||(ptInRect(rightX, rightY, rectXOne, rectYOne, wid, len))) {
     showGameOverMessage();
     gameOver = true;
@@ -97,14 +93,14 @@ void newDimensions() {
 void drawPassage() {
 
   /*
- *[These blocks draws the passage of the ship at the position as mentioned in the comments]
-   *[This function draws a new passage at different position each time the spaceship goes out of bound ]
+ *[These blocks draw the passage of the ship at the position as mentioned in the comments]
+   *[This blocks draw a new passage at different position each time the spaceship goes out of bound ]
    *[It gets its information from the global variables]
    */
 
 
   if (topBottom == true && bottom ==true) {
-    rect (R_Position, height-length, breadth, length);                             //bottom
+    rect (R_Position, height-length, breadth, length);                             // this draws the passage at bottom
     rect (R_Position-SPACING, height-length, breadth, length);
     rectXOne = R_Position;
     rectYOne = height-length;
@@ -113,7 +109,7 @@ void drawPassage() {
     wid = breadth;
     len = length;
   } else if (topBottom == true && bottom ==false) {
-    rect (R_Position, 0, breadth, length);                                    //top
+    rect (R_Position, 0, breadth, length);                                    //this draws the passage at top
     rect (R_Position-SPACING, 0, breadth, length);
     rectXOne = R_Position;
     rectYOne = 0;
@@ -124,7 +120,7 @@ void drawPassage() {
   }
 
   if (topBottom == false && bottom ==false) {
-    rect (0, R_Position, length, breadth);                                    //left
+    rect (0, R_Position, length, breadth);                                    //this draws the passage at left
     rect (0, R_Position-SPACING, length, breadth);
     rectXOne = 0;
     rectYOne = R_Position;
@@ -132,9 +128,8 @@ void drawPassage() {
     rectYTwo =  R_Position-SPACING;
     wid = length;
     len = breadth;
-    
   } else if (topBottom == false && bottom ==true) {
-    rect (width-length, R_Position, length, breadth);                                    //right
+    rect (width-length, R_Position, length, breadth);                            //this draws the passage at right
     rect (width-length, R_Position-SPACING, length, breadth);
     rectXOne = width-length;
     rectYOne = R_Position;
@@ -191,7 +186,6 @@ void checkBound() {
       }
     }
   }
-
   outOfBound =false;
 }
 
@@ -204,19 +198,20 @@ void checkBound() {
 
 void keyPressed()
 {
-  if (key=='a'|| key=='j')
+  if (key=='a'||key=='A'|| key=='j'|| key=='J')
   {
     status = "left";
   }
-  if (key=='d'|| key=='l')
+  if (key=='d'|| key=='D'||key=='l'|| key=='L')
   {  
     status ="right";
-  }
-  if (key =='s' || key =='k')
+}
+  if(key =='s'|| key =='S'||key=='k'|| key=='K')
   {
-    status = "straight";
+   status = "straight";
   }
 }
+
 
 /*
  *[This function moves the spaceship to the desired direction in circles and straight-line]
@@ -289,10 +284,10 @@ void drawShip()
  */
 void calcDimensions()
 {
-  headX =centerX+ d1*cos(theta);
-  headY = centerY+ d1*sin(theta);
-  rightX =centerX+ d2*cos(theta+phi);
-  rightY = centerY+ d2*sin(theta+phi);
-  leftX= centerX+ d2*((cos(theta-phi))); 
-  leftY= centerY+ d2*((sin(theta-phi)));
+  headX =centerX+ head_height*cos(theta);
+  headY = centerY+ head_height*sin(theta);
+  rightX =centerX+ body_width*cos(theta+phi);
+  rightY = centerY+ body_width*sin(theta+phi);
+  leftX= centerX+ body_width*((cos(theta-phi))); 
+  leftY= centerY+ body_width*((sin(theta-phi)));
 }
