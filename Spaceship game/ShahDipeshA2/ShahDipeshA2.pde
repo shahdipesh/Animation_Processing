@@ -6,7 +6,7 @@
  *QUESTION:[Question4]
  *PURPOSE:[Move the spaceship through different obstacles]
  */
-final float SPEED = 2, TURN_SPEED=0.02, SPACING=60;                // spacing defines the distance between the two passages
+final float SPEED = 2, TURN_SPEED=0.02, SPACING=80;                // spacing defines the distance between the two passages
 float theta=radians(0), phi=radians(130), length =100, breadth=10; // length and breadth define the height and width of rectangles
 float centerX, centerY, head_height=30, body_width=20;              //head_height and head_width is the distance from centre of spaceship to the tip, and the distance from centre to the wings of the spaceship respectively
 float headX, headY, leftX, leftY, rightX, rightY;                // head, left and right are the tip,left wing and right wing of the spaceship
